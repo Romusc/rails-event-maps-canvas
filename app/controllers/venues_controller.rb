@@ -75,7 +75,7 @@ class VenuesController < ApplicationController
   # THE EVENTS HAPPENING IN THIS CITY AND WITH THAT SUBCATEGORY:
 
   def eb_venue_ids(city, subcategory)
-    subcategory_and_id = subcategories_and_ids_list.select { |pair| pair[0].downcase == subcategory }
+    subcategory_and_id = subcategories_and_ids_list.select { |pair| pair[0] == subcategory }
     url_no_page = "#{EVENTS_URL}#{LOCATION_PREFIX}" + city + "&#{SUBCATEGORY_PREFIX}" + subcategory_and_id[0][1] + "&#{TOKEN_PREFIX}#{OAUTH_TOKEN}" + "&#{PAGE_PREFIX}"
     venue_ids = []
     (1..10).each do |i|

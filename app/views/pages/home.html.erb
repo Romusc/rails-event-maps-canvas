@@ -6,7 +6,7 @@
     <%= text_field_tag :city %>
   </div>
   <div>
-    <%= text_field_tag :subcategory %>
+    <%= select_tag "subcategory", options_for_select(@subcategories) %>
   </div>
   <div class="btn btn-primary">
     <%= f.submit %>

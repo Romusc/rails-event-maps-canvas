@@ -123,7 +123,7 @@ class EventsController < ApplicationController
     end
 
     def eb_event_ids(city, subcategory)
-      subcategory_and_id = subcategories_and_ids_list.select { |pair| pair[:name].downcase == subcategory }
+      subcategory_and_id = subcategories_and_ids_list.select { |pair| pair[:name] == subcategory }
       url_no_page = "#{EVENTS_URL}#{LOCATION_PREFIX}" + city + "&#{SUBCATEGORY_PREFIX}" + subcategory_and_id[0][:id] + "&#{TOKEN_PREFIX}#{OAUTH_TOKEN}" + "&#{PAGE_PREFIX}"
       event_ids = []
       (1..10).each do |i|
