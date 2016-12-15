@@ -34,30 +34,9 @@ class VenuesController < ApplicationController
     params.require(:venue).permit(:name, :address, :city, :subcategory, :artist, :latitude, :longitude)
   end
 
-
-  # LET'S REQUIRE ALL THE NECESSARY "require" TO CALL THE API:
-
-  require 'open-uri'
-  require 'json'
-  require 'yaml'
-
-  # LET'S DECLARE THE CONSTANTS HERE SO THAT WE DON'T OVERWHELM THE TOP OF THE SCREEN:
-
-  KEYS = YAML.load(File.open("./config/application.yml", 'r'))
-  OAUTH_TOKEN = KEYS['keys']['OAUTH_TOKEN']
-  API_KEY = KEYS['keys']['API_KEY']
-
-  SUBCATEGORIES_URL = 'https://www.eventbriteapi.com/v3/subcategories/'
-  EVENTS_URL = 'https://www.eventbriteapi.com/v3/events/search/?'
-  VENUES_URL = 'https://www.eventbriteapi.com/v3/venues/'
-
-  LOCATION_PREFIX = 'location.address='
-  PAGE_PREFIX = 'page='
-  TOKEN_PREFIX = 'token='
-  SUBCATEGORY_PREFIX = 'subcategories='
+  # CONSTANTS ARE DEFINED IN 'config/initializers/my_constants'
 
   # THIS METHODS RETURNS A LIST OF POSSIBLE EVENTBRITE SUBCATEGORIES:
-
   def subcategories_and_ids_list
     url_no_page = "#{SUBCATEGORIES_URL}?#{TOKEN_PREFIX}#{OAUTH_TOKEN}&#{PAGE_PREFIX}"
     subcategory_names_and_ids = []
@@ -99,5 +78,8 @@ class VenuesController < ApplicationController
     eb_venue_details[:city] = details["address"]["city"]
     eb_venue_details
   end
-
+  # THESE REQUIRE ARE SUPERFLUOUS, KEEPING THEM HERE UNTIL I UNDERSTAND WHY:
+  # require 'open-uri'
+  # require 'json'
+  # require 'yaml'
 end

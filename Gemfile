@@ -16,9 +16,15 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 
+#Geocoding gems
 gem 'geocoder'
 gem 'coffee-rails'
 gem 'gmaps4rails'
+
+#Parsin gems
+gem 'json'
+# gem 'open-uri'
+# gem 'yaml'
 
 source 'https://rails-assets.org' do
   gem "rails-assets-underscore"
