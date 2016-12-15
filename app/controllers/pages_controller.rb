@@ -2,11 +2,11 @@ class PagesController < ApplicationController
   def home
     @venue = Venue.new
     @event = Event.new
-    @subcategories = []
+    subs = []
     subcategories_and_ids_list.each do |hash|
-      @subcategories << hash[:name]
+      subs << hash[:name]
     end
-    @subcategories.uniq.sort!
+    @subcategories = subs.uniq.sort!
   end
 
   private

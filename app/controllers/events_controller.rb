@@ -2,7 +2,24 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.all
+
+    # @events = Event.where(:subcategory => params[:subcategory]).select {|event| event.venue.city.downcase == params[:city]}
+    # @events.sort!
+    @events = []
+    @venues = []
+    @venues = Venue.near(params[:city], 30).select do |venue|
+      if venue.events.select {|event| event.subcategory == params[:subcategory]} != []
+        @events << (venue.events.select {|event| event.subcategory == params[:subcategory]}).flatten
+        @events.flatten!
+        @venues << venue
+      end
+    end
+
+    @hash = Gmaps4rails.build_markers(@venues) do |venue, marker|
+      marker.lat venue.latitude
+      marker.lng venue.longitude
+      # marker.infowindow render_to_string(partial: "/flats/map_box", locals: { flat: flat })
+    end
   end
 
   def create_all_events
@@ -18,7 +35,7 @@ class EventsController < ApplicationController
                       eb_id: d[:eb_id])
       end
     end
-    redirect_to events_path
+    redirect_to controller: 'events', action: 'index', city: params[:city], subcategory: params[:subcategory]
   end
 
   def show

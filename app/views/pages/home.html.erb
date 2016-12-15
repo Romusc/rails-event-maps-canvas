@@ -2,9 +2,11 @@
 <p>Enter the parameters of your event map:</p>
 
 <%= form_for @venue, :url => {:action => 'create_all', :controller => 'venues'} do |f| %>
+  <p> Pick a city: <p>
   <div>
     <%= text_field_tag :city %>
   </div>
+  <p> Pick a category <p>
   <div>
     <%= select_tag "subcategory", options_for_select(@subcategories) %>
   </div>
