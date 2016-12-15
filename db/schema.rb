@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20161212163530) do
     t.string   "name"
     t.string   "subcategory"
     t.integer  "venue_id"
+    t.bigint   "eb_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["venue_id"], name: "index_events_on_venue_id", using: :btree
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20161212163530) do
     t.float    "longitude"
     t.string   "address"
     t.string   "city"
-    t.string   "eb_id"
+    t.integer  "eb_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

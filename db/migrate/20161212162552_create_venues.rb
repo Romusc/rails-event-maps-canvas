@@ -6,7 +6,7 @@ class CreateVenues < ActiveRecord::Migration[5.0]
       t.float :longitude
       t.string :address
       t.string :city
-      t.string :eb_id
+      t.integer :eb_id
 
       t.timestamps
     end

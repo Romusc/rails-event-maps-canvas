@@ -5,11 +5,6 @@ class VenuesController < ApplicationController
   end
 
   def create_all
-
-    # p 'bijour'
-    # p eb_venue_ids(params[:city], params[:subcategory])
-    # p 'random'
-
     eb_venue_ids(params[:city], params[:subcategory]).each do |venue_id|
       if Venue.find_by(eb_id: venue_id).nil?
         d = eb_venue_details(venue_id)
@@ -17,8 +12,7 @@ class VenuesController < ApplicationController
                       city: d[:city], address: d[:address], eb_id: venue_id)
       end
     end
-    # p eb_venue_details('17248556')
-    redirect_to venues_path
+    redirect_to controller: 'events', action: 'create_all_events', city: params[:city], subcategory: params[:subcategory]
   end
 
   def index
@@ -27,10 +21,11 @@ class VenuesController < ApplicationController
 
 
 
+  def destroy
+  end
 
   def create
-    p "GGG"
-    redirect_to root_path
+    redirect_to venues_path
   end
 
   private
@@ -39,10 +34,8 @@ class VenuesController < ApplicationController
     params.require(:venue).permit(:name, :address, :city, :subcategory, :artist, :latitude, :longitude)
   end
 
-  def destroy
-  end
 
-  # LET'S REQUIRE ALL THE NECESSARY "require":
+  # LET'S REQUIRE ALL THE NECESSARY "require" TO CALL THE API:
 
   require 'open-uri'
   require 'json'
@@ -94,20 +87,6 @@ class VenuesController < ApplicationController
     end
     venue_ids.uniq.sort!
   end
-
-  # def names_and_venue_ids(city, subcategory)
-  #   subcategory_and_id = subcategories_and_ids_list.select { |pair| pair[0].downcase == subcategory }
-  #   url_no_page = "#{EVENTS_URL}#{LOCATION_PREFIX}" + city + "&#{SUBCATEGORY_PREFIX}" + subcategory_and_id[0][1] + "&#{TOKEN_PREFIX}#{OAUTH_TOKEN}" + "&#{PAGE_PREFIX}"
-  #   event_names_and_venue_ids = []
-  #   (1..10).each do |i|
-  #     url = url_no_page + "#{i}"
-  #     events = JSON.parse(open(url).read)
-  #     events["events"].each do|event|
-  #       event_names_and_venue_ids << {name: event["name"]["text"], venue_id: event["venue_id"]}
-  #     end
-  #   end
-  #   names_and_venue_ids
-  # end
 
   def eb_venue_details(venue_id)
     url = "#{VENUES_URL}#{venue_id}?#{TOKEN_PREFIX}#{OAUTH_TOKEN}"
